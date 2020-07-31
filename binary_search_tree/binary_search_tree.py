@@ -9,6 +9,11 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+
+from stack import Stack
+from queue import Queue
+
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -105,44 +110,138 @@ class BSTNode:
 
     # Part 2 -----------------------
 
-    # # Print all the values in order from low to high
-    # # Hint:  Use a recursive, depth first traversal
-    # def in_order_print(self):
-    #     pass
+    # Print all the values in order from low to high
+    # Hint:  Use a recursive, depth first traversal
+    def in_order_print(self):
+        if self:
+            if self.left:
+                self.left.in_order_print()
+            print(self.value)
+            if self.right:
+                self.right.in_order_print()
 
-    # # Print the value of every node, starting with the given node,
-    # # in an iterative breadth first traversal
-    # def bft_print(self):
-    #     pass
+    # Print the value of every node, starting with the given node,
+    # in an iterative breadth first traversal
+    def bft_print(self):
+        if self is None:
+            return None
+        queue = []
+        queue.append(self)
+        
+        while len(queue) > 0:
+            print(queue[0].value)
+            node = queue.pop(0)
+            
+            if node.left: 
+                queue.append(node.left) 
+  
+            if node.right: 
+                queue.append(node.right)
+            
 
-    # # Print the value of every node, starting with the given node,
-    # # in an iterative depth first traversal
+    # Print the value of every node, starting with the given node,
+    # in an iterative depth first traversal
+    
+    ## in order
+    
     # def dft_print(self):
-    #     pass
+    #     node = self
+        
+    #     stack = []
+    #     while True:
+    #         if node is not None:
+    #             stack.append(node)
+    #             node = node.left
+    #         elif(stack):
+    #             node = stack.pop()
+    #             print(node.value)
+    #             node = node.right
+    #         else:
+    #             break
+            
+    # ## preorder
+    
+    # def dft_print(self):
+    #     node = self
+        
+    #     stack = []
+    #     stack.append(node)
+    #     while len(stack) > 0:
+    #         node = stack.pop()
+    #         print(node.value)
+            
+    #         if node.right:
+    #             stack.append(node.right)
+                
+    #         if node.left:
+    #             stack.append(node.left)
+                
+    ## postorder
+    
+    def dft_print(self):
+        node = self
+        
+        stack = []
+        stack.append(node)
+        stack2 = []
+        
+        while stack:
+            node = stack.pop()
+            stack2.append(node.value)
+            
+            if node.left:
+                stack.append(node.left)
+                
+            if node.right:
+                stack.append(node.right)
+                
+        while stack2:
+            print(stack2.pop())
+                
+            
+    
+            
 
-    # # Stretch Goals -------------------------
-    # # Note: Research may be required
+                
+               
+            
+        
+        
 
-    # # Print Pre-order recursive DFT
-    # def pre_order_dft(self):
-    #     pass
+    # Stretch Goals -------------------------
+    # Note: Research may be required
 
-    # # Print Post-order recursive DFT
-    # def post_order_dft(self):
-    #     pass
+    # Print Pre-order recursive DFT
+    def pre_order_dft(self):
+        pass
+
+    # Print Post-order recursive DFT
+    def post_order_dft(self):
+        pass
+    
+herm = BSTNode(10)
+
+herm.insert(5)
+herm.insert(7)
+herm.insert(6)
+herm.insert(3)
+herm.insert(4)
+herm.insert(2)
+
+herm.dft_print()
 
 """
 This code is necessary for testing the `print` methods
 """
-# bst = BinarySearchTree(1)
+bst = BSTNode(1)
 
-# bst.insert(8)
-# bst.insert(5)
-# bst.insert(7)
-# bst.insert(6)
-# bst.insert(3)
-# bst.insert(4)
-# bst.insert(2)
+bst.insert(8)
+bst.insert(5)
+bst.insert(7)
+bst.insert(6)
+bst.insert(3)
+bst.insert(4)
+bst.insert(2)
 
 # bst.bft_print()
 # bst.dft_print()
@@ -151,6 +250,6 @@ This code is necessary for testing the `print` methods
 # print("pre order")
 # bst.pre_order_dft()
 # print("in order")
-# bst.in_order_dft()
+# bst.in_order_print()
 # print("post order")
 # bst.post_order_dft()  
